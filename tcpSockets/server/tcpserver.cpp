@@ -9,8 +9,8 @@ TcpServer::TcpServer(QObject *parent) : QObject(parent)
 
 TcpServer::~TcpServer()
 {
-    delete tcpServer;
     delete tcpSocket;
+    delete tcpServer;
 }
 
 void TcpServer::listenToSocket()
@@ -56,9 +56,10 @@ void TcpServer::disconnectSocket()
 
 void TcpServer::read()
 {
+
     in.startTransaction();
 
-    QString payload;
+    QByteArray payload;
     in >> payload;
 
     if (!in.commitTransaction())
@@ -67,7 +68,7 @@ void TcpServer::read()
     emit messageReceived(payload);
 }
 
-void TcpServer::send(QString payload)
+void TcpServer::send(QByteArray payload)
 {
     if(tcpSocket->state() != 0)
     {

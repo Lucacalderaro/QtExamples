@@ -11,7 +11,7 @@
  * \brief The TcpClient class provides the minimum members to establish a TCP connection.
  *
  * The TcpClient class encapsulates data to be sent in packets defined by the Qt_5_10 protocol.
- * Custom protocol can be used by subclassing TcpClient and overriding the read and send methods.
+ * Custom protocol can be used by subclassing TcpClient.
  */
 
 class TcpClient : public QObject
@@ -25,7 +25,7 @@ public:
 public slots:
     void connectSocket();       // Try to connect the socket to the Host.
     void disconnectSocket();    // Disconnect from Host.
-    void send(QString payload); // Send data to the Host.
+    void send(QByteArray payload); // Send data to the Host.
 
     void setIp(QString ip_);    // Set address of the Host.
     void setPort(int port_);    // Set the port which the Host is listening.
@@ -33,16 +33,15 @@ public slots:
 signals:
     void connected();           // This signal is emitted once the connection is established.
     void disconnected();        // This signal is emitted once the socket disconnect from the Host.
-    void messageReceived(QString message);  // This signal is emitted once the socket received an entire message.
-
-protected:
-    void read();                // Read the buffer of the socket and check if the entire data packet is arrived.
+    void messageReceived(QByteArray message);  // This signal is emitted once the socket received an entire message.
 
 private:
     QString ip;                 // Address of the Host.
     int port;                   // Port which the Host is listening.
     QTcpSocket * tcpSocket;     // Pointer to the instance of QTcpSocket class.
     QDataStream in;             // Datastream used to deserialize the data to be read.
+
+    void read();                // Read the buffer of the socket and check if the entire data packet is arrived.
 };
 
 #endif // TCPCLIENT_H

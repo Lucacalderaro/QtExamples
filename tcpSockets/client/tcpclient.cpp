@@ -35,7 +35,7 @@ void TcpClient::read()
     in.startTransaction();
 
     // Deserialize the stream.
-    QString payload;
+    QByteArray payload;
     in >> payload;
 
     // If the entire data packet has arrived continue, otherwise return to loop event.
@@ -45,7 +45,7 @@ void TcpClient::read()
     emit messageReceived(payload);
 }
 
-void TcpClient::send(QString payload)
+void TcpClient::send(QByteArray payload)
 {
     if(tcpSocket->state() != 0)
     {

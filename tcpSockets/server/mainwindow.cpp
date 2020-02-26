@@ -28,7 +28,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::sendMessage()
 {
-    tcpServer->send(ui->lineEditSend->text());
+    tcpServer->send(ui->lineEditSend->text().toUtf8());
 }
 
 void MainWindow::listen()
